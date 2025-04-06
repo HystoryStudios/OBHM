@@ -1,18 +1,16 @@
 ﻿using OBHM;
 using Raylib_CsLo;
-using System.Reflection.Emit;
+using System.Numerics;
 int screen = Raylib.GetCurrentMonitor();
-Raylib.InitWindow(Raylib.GetMonitorWidth(screen), Raylib.GetMonitorHeight(screen), "OBHM");
+Raylib.InitWindow(Raylib.GetMonitorWidth(screen) /2, Raylib.GetMonitorHeight(screen) /2, "OBHM");
 Raylib.HideCursor();
-Raylib.ToggleFullscreen();
 Raylib.SetTargetFPS(1000);
 
 Player player = new Player(500, 500);
 
-PaternCircle generator = new PaternCircle(Raylib.GetMonitorWidth(screen) / 2, Raylib.GetMonitorHeight(screen) / 2, 10, 10, 200f, Raylib.RED);
-PaternCircle generatorl = new PaternCircle(800, 400, 10, 10, 200f, Raylib.RED);
-PaternCircle generatorr = new PaternCircle(0, 400, 10, 10, 200f, Raylib.RED);
-
+PaternCircle generator = new PaternCircle(Raylib.GetMonitorWidth(screen) / 2, Raylib.GetMonitorHeight(screen) / 2, 10, 10, 200f, Raylib.RED, player.position, 5);
+PaternCircle generatorl = new PaternCircle(800, 400, 10, 10, 200f, Raylib.RED, player.position, 5);
+PaternCircle generatorr = new PaternCircle(0, 400, 10, 10, 200f, Raylib.RED, player.position, 5);
 
 while (!Raylib.WindowShouldClose())
 {

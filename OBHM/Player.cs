@@ -10,7 +10,7 @@ namespace OBHM
 {
         public class Player
         {
-            private Vector2 position;
+            public Vector2 position;
             private float speed = 300f;
             private Color color = Raylib.SKYBLUE;
 
@@ -22,11 +22,12 @@ namespace OBHM
             public void Update()
             {
                 float delta = Raylib.GetFrameTime();
-
+            
                 if (Raylib.IsKeyDown(KeyboardKey.KEY_W)) position.Y -= speed * delta;
                 if (Raylib.IsKeyDown(KeyboardKey.KEY_S)) position.Y += speed * delta;
                 if (Raylib.IsKeyDown(KeyboardKey.KEY_A)) position.X -= speed * delta;
                 if (Raylib.IsKeyDown(KeyboardKey.KEY_D)) position.X += speed * delta;
+
 
                 if (Raylib.IsKeyDown(KeyboardKey.KEY_LEFT_SHIFT)) speed = 500f;
                 else speed = 300f;

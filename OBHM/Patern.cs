@@ -15,35 +15,39 @@ namespace OBHM
         private float Speed;
         private int Size;
         private Color color;
-        private List<Bullet> bullets;
-        public PaternCircle(int x, int y, int number, int size, float speed, Color color) 
+        private List<CircleBullet> bullets;
+        private Vector2 PlayerPositon;
+        private int PlayerSize;
+        public PaternCircle(int x, int y, int number, int size, float speed, Color color, Vector2 PP, int PS) 
         { 
-            bullets = new List<Bullet>();
+            bullets = new List<CircleBullet>();
             Position = new Vector2(x, y);
             this.number = number;
             this.Speed = speed;
             this.Size = size;
             this.color = color;
+            PlayerPositon = PP;
+            PlayerSize = PS;
             GeneratePatern();
         }
         private void GeneratePatern()
         {
             for (int i = 0; i < 360; i += number)
             {
-                Bullet bl = new Bullet(Position.X, Position.Y, i, Speed, Size, color);
+                CircleBullet bl = new CircleBullet(Position.X, Position.Y, i, Speed, Size, color, PlayerPositon, PlayerSize);
                 bullets.Add(bl);
             }
         }
         public void Update()
         {
-            foreach (Bullet b in bullets)
+            foreach (CircleBullet b in bullets)
             {
                 b.Update();
             }
         }
         public void Draw()
         {
-            foreach (Bullet b in bullets)
+            foreach (CircleBullet b in bullets)
             {
                 b.Draw();
             }

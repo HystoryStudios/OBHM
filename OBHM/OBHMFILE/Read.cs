@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Raylib_CsLo;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,15 +13,37 @@ namespace OBHM.OBHMFILE
         public Read(string path)
         {
             Path = path;
-            ReadFile(path);
         }
 
-        private Dictionary<float, PaternCircle> ReadFile(string path)
+        public Dictionary<double, List<Patern>> ReadFile()
         {
-            Dictionary<float, PaternCircle> level = new Dictionary<float, PaternCircle>();
-            foreach (var line in File.ReadAllLines(path))
+            Dictionary<double, List<Patern>> level = new Dictionary<double, List<Patern>>();
+            foreach (var line in File.ReadAllLines(Path))
             {
                 string[] item = line.Split(" ");
+                if (item[0] == "#")
+                {
+                    continue;
+                }
+                if (item.Length == 0)
+                {
+                    continue;
+                }
+                string clean = item[0].Trim('[', ']');
+
+                TimeSpan ts = TimeSpan.ParseExact(clean, @"mm\:ss\.fff", null);
+
+                double timeInSeconds = ts.TotalSeconds;
+
+                Patern patern = new Patern(int.Parse(item[2]), int.Parse(item[3]), int.Parse(item[4]), int.Parse(item[5]), int.Parse(item[6]), Raylib.RED, item[1]);
+
+                // Ajout à la liste associée à ce timestamp
+                if (!level.ContainsKey(timeInSeconds))
+                {
+                    level[timeInSeconds] = new List<Patern>();
+                }
+
+                level[timeInSeconds].Add(patern);
             }
             return level;
         }

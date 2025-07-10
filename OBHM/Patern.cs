@@ -7,47 +7,69 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace OBHM
-{
-    public class PaternCircle
+{ 
+    public class Patern
     {
-        private int number;
+        private int AngleStep;
         private Vector2 Position;
         private float Speed;
         private int Size;
         private Color color;
-        private List<CircleBullet> bullets;
-        private Vector2 PlayerPositon;
-        private int PlayerSize;
-        public PaternCircle(int x, int y, int number, int size, float speed, Color color, Vector2 PP, int PS) 
+        public List<Bullet> bullets;
+        private string Type;
+        private float RotationSpeed;
+        public Patern(int x, int y, int angleStep, int size, float speed, Color color, string type) 
         { 
-            bullets = new List<CircleBullet>();
+            bullets = new List<Bullet>();
             Position = new Vector2(x, y);
-            this.number = number;
+            AngleStep = angleStep;
             this.Speed = speed;
             this.Size = size;
             this.color = color;
-            PlayerPositon = PP;
-            PlayerSize = PS;
+            Type = type;
+            GeneratePatern();
+        }
+        public Patern(int x, int y, int angleStep, int size, float speed, Color color, string type, float rotationspeed)
+        {
+            bullets = new List<Bullet>();
+            Position = new Vector2(x, y);
+            AngleStep = angleStep;
+            this.Speed = speed;
+            this.Size = size;
+            this.color = color;
+            Type = type;
+            RotationSpeed = rotationspeed;
             GeneratePatern();
         }
         private void GeneratePatern()
         {
-            for (int i = 0; i < 360; i += number)
+            for (int i = 0; i < 360; i += AngleStep)
             {
-                CircleBullet bl = new CircleBullet(Position.X, Position.Y, i, Speed, Size, color, PlayerPositon, PlayerSize);
+                Bullet bl = new Bullet(Position.X, Position.Y, i, Speed, Size, color, Type, RotationSpeed);
                 bullets.Add(bl);
             }
         }
-        public void Update()
+        public void Update(Vector2 PlayerPosition, int playersize)
         {
-            foreach (CircleBullet b in bullets)
+            List<Bullet> deadlist = new List<Bullet>();
+            foreach (Bullet b in bullets)
             {
-                b.Update();
+                b.Update(PlayerPosition, playersize);
+                if (b.IsOffScreen())
+                {
+                    deadlist.Add(b);
+                    continue;
+                }
             }
+            foreach (Bullet b in deadlist)
+            {
+                bullets.Remove(b);
+            }
+            deadlist.Clear();
         }
         public void Draw()
         {
-            foreach (CircleBullet b in bullets)
+            foreach (Bullet b in bullets)
             {
                 b.Draw();
             }

@@ -1,25 +1,23 @@
 ﻿using Raylib_CsLo;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OBHM
 {
         public class Player
         {
             public Vector2 position;
+            public int PlayerSize;
             private float speed = 300f;
             private Color color = Raylib.SKYBLUE;
+            public bool IsDead = false;
 
-            public Player(float x, float y)
+            public Player(float x, float y, int plsi)
             {
                 position = new Vector2(x, y);
+                PlayerSize = plsi;
             }
 
-            public void Update()
+            public void Update(OBHMFILE.Whrite whrite)
             {
                 float delta = Raylib.GetFrameTime();
             
@@ -28,14 +26,29 @@ namespace OBHM
                 if (Raylib.IsKeyDown(KeyboardKey.KEY_A)) position.X -= speed * delta;
                 if (Raylib.IsKeyDown(KeyboardKey.KEY_D)) position.X += speed * delta;
 
+                foreach (var e in whrite.Notes.Values)
+                {
+                    foreach (var j in e)
+                    {
+                        foreach (var k in j.bullets)
+                        {
+                            if (Raylib.CheckCollisionCircles(position, PlayerSize, k.position, k.Size) && k.IsAlive)
+                            {
+                                IsDead = true; 
+                                break;
+                            }
+                        }
+                        
+                    }
+                }
 
-                if (Raylib.IsKeyDown(KeyboardKey.KEY_LEFT_SHIFT)) speed = 500f;
+            if (Raylib.IsKeyDown(KeyboardKey.KEY_LEFT_SHIFT)) speed = 500f;
                 else speed = 300f;
             }
 
             public void Draw()
             {
-                Raylib.DrawRectangleV(position, new Vector2(5, 5), color);
+                Raylib.DrawRectangleV(position, new Vector2(PlayerSize, PlayerSize), color);
             }
         }
 }

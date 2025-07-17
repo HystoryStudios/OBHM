@@ -1,10 +1,5 @@
 ﻿using Raylib_CsLo;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OBHM.OBHMFILE
 {
@@ -12,15 +7,22 @@ namespace OBHM.OBHMFILE
     {
         private Music Music { get; set; }
         public Dictionary<double, List<Patern>> Notes {  get; set; }
+        public string LevelPath;
         public float CurrentTime;
-        public Whrite(Dictionary<double, List<Patern>> notes) 
+        public Whrite(Dictionary<double, List<Patern>> notes, string levelpath) 
         {
             Notes = notes;
+            LevelPath = levelpath;
         }
         public void LunchMusic(string musicpath)
         {
             Music = Raylib.LoadMusicStream(musicpath);
             Raylib.PlayMusicStream(Music);
+        }
+        public void Unload()
+        {
+            Raylib.UnloadMusicStream(Music);
+            Raylib.StopMusicStream(Music);
         }
         public void Update(Vector2 pp, int ps)
         {

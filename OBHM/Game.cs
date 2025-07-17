@@ -4,19 +4,25 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace OBHM
 {
     public class Game
     {
-        public static void playlevel(Whrite write, Player player, string Musicpath)
+        public static void playlevel(Dictionary<double, List<Patern>> notes, string levelPath, float startX, float startY, int playerSize, string Musicpath)
         {
             int screen = Raylib.GetCurrentMonitor();
+
             Raylib.InitWindow(1000, 1000, "OBHM");
             Raylib.InitAudioDevice();
             Raylib.HideCursor();
             Raylib.SetTargetFPS(Raylib.GetMonitorRefreshRate(screen));
+
+            Whrite write = new Whrite(notes, levelPath);
+            Player player = new Player(startX, startY, playerSize);
 
             write.LunchMusic(Musicpath);
             while (!Raylib.WindowShouldClose())
@@ -32,14 +38,29 @@ namespace OBHM
 
                 if (player.IsDead)
                 {
-                    Console.WriteLine("GAME OVER");
-                    Menu menu1 = new Menu();
+                    break;
                 }
             }
 
+            Console.Clear();
+            Raylib.CloseAudioDevice();
+            write.Unload();
             Raylib.CloseWindow();
+            Console.WriteLine("GAME OVER");
+            Console.WriteLine("Tap 'R' or 'r' to retry the level");
 
-            Menu menu = new Menu();    
+            char input = Console.ReadKey().KeyChar;
+            Console.WriteLine();
+
+            if (input == 'R' || input == 'r')
+            {
+                playlevel(notes, levelPath, startX, startY, playerSize, Musicpath);
+            }
+            else
+            {
+                Menu menu = new Menu();
+                menu.GetMenu();
+            }
         }
     }
 }

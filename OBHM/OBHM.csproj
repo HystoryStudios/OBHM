@@ -8,8 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="OBHM_PATERN\" />
     <Folder Include="OBHM_SKIN\" />
-    <Folder Include="OBHM\" />
+    <Folder Include="OBHM_UI\" />
   </ItemGroup>
 
   <ItemGroup>

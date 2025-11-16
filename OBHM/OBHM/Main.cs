@@ -4,9 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OBHM.FILE
+namespace OBHM
 {
-    public class KeyBindJson
+    public class Program
     {
+        public static void Main(string[] args)
+        {
+
+        }
     }
 }

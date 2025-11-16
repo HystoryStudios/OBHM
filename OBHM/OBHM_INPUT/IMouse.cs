@@ -5,7 +5,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OBHM.OBHM_INPUT
+namespace OBHM.INPUT
 {
     public interface IMouse
     {

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using OBHM.MAP;
+using OBHM.RENDER;
 
 namespace OBHM
 {
@@ -10,7 +7,7 @@ namespace OBHM
     {
         public static void Main(string[] args)
         {
-
+            
         }
     }
 }

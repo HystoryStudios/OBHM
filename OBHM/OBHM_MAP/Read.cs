@@ -1,11 +1,13 @@
 ﻿using OBHM.RENDER;
 using OBHM.CORE;
+using OBHM.AUDIO;
 
 namespace OBHM.MAP
 {
     public class Read
     {
         public string Path { get; set; }
+        public Music Music { get; set; }
         public Read(string path)
         {
             Path = path;
@@ -20,6 +22,10 @@ namespace OBHM.MAP
                 if (item[0] == "#")
                 {
                     continue;
+                }
+                if (item[0] == "#MUSIC")
+                {
+                    Music = new Music() { FilePath = item[1] };
                 }
                 if (item.Length == 0)
                 {
